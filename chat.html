@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat GPT</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Bienvenido al Chat GPT</h1>
+  </header>
+
+  <main>
+    <div id="chat-box"></div>
+    <input type="text" id="user-input" placeholder="Escribe tu mensaje...">
+    <button onclick="sendMessage()">Enviar</button>
+
+    <button onclick="logout()" style="margin-top: 1em;">Cerrar sesión</button>
+  </main>
+
+  <footer>
+    <p>© 2025 Interfaz GPT</p>
+  </footer>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+
+  <script>
+    // Firebase config (puedes reusar el mismo de app.js si lo importas aquí también)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCB1oPPffremu8LpYgci3IMlOiPHO2xniM",
+      authDomain: "police-copilot-trafico-esp.firebaseapp.com",
+      projectId: "police-copilot-trafico-esp",
+      storageBucket: "police-copilot-trafico-esp.appspot.com",
+      messagingSenderId: "249020042812",
+      appId: "1:249020042812:web:ea6102d42ee5a4e304bd39",
+      measurementId: "G-5RXRM5ZLJY"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Función de chat simulado
+    function sendMessage() {
+      const input = document.getElementById("user-input");
+      const chatBox = document.getElementById("chat-box");
+      const message = input.value.trim();
+
+      if (message === "") return;
+
+      chatBox.innerHTML += `<div><strong>Tú:</strong> ${message}</div>`;
+      input.value = "";
+
+      // Simulación de respuesta
+      chatBox.innerHTML += `<div><strong>GPT:</strong> Esta es una respuesta simulada.</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Cerrar sesión y volver al index
+    function logout() {
+      auth.signOut().then(() => {
+        window.location.href = "index.html";
+      });
+    }
+  </script>
+</body>
+</html>
