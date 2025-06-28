@@ -95,14 +95,30 @@ function resetPassword() {
 function sendMessage() {
   const input = document.getElementById("user-input");
   const chatBox = document.getElementById("chat-box");
-
   const message = input.value.trim();
   if (message === "") return;
 
+  // Mostrar el mensaje del usuario
   chatBox.innerHTML += `<div><strong>Tú:</strong> ${message}</div>`;
   input.value = "";
 
-  chatBox.innerHTML += `<div><strong>GPT:</strong> (respuesta automática)</div>`;
+  // Enviar al backend que llama a OpenAI
+  fetch("/api/openai", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ message: message })
+  })
+  .then(response => response.json())
+  .then(data => {
+    chatBox.innerHTML += `<div><strong>GPT:</strong> ${data.reply}</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  })
+  .catch(error => {
+    console.error("Error al obtener respuesta de GPT:", error);
+    chatBox.innerHTML += `<div><strong>GPT:</strong> Hubo un error al responder.</div>`;
+  });
 }
 
 // Modal de política de privacidad

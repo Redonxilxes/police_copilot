@@ -1,0 +1,9 @@
+# Archivos ocultos del sistema
+.DS_Store
+
+# Carpetas de dependencias (si llegas a usar npm)
+node_modules/
+
+# Archivos de configuración local
+.env
+.env.local
