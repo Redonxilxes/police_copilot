@@ -13,8 +13,8 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
 // Verifica si el reCAPTCHA fue completado
-function captchaValido() {
-  const response = grecaptcha.getResponse();
+function captchaValido(id) {
+  const response = grecaptcha.getResponse(id);
   if (!response) {
     alert("Por favor, verifica que no eres un robot.");
     return false;
@@ -34,7 +34,7 @@ function cerrarRegistro() {
 
 // Registro con campos adicionales
 function register() {
-  if (!captchaValido()) return;
+  if (!captchaValido('recaptcha-registro')) return;
 
   const nombre = document.getElementById("nombre").value;
   const apellidos = document.getElementById("apellidos").value;
@@ -64,7 +64,7 @@ function register() {
 
 // Inicio de sesión básico
 function login() {
-  if (!captchaValido()) return;
+  if (!captchaValido('recaptcha-login')) return;
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;

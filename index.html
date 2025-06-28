@@ -14,47 +14,49 @@
 
   <main>
     <section id="auth-section">
-  <h2>Iniciar sesión</h2>
-  <input type="email" id="email" placeholder="Correo electrónico">
-  <input type="password" id="password" placeholder="Contraseña">
+      <h2>Iniciar sesión</h2>
+      <input type="email" id="email" placeholder="Correo electrónico">
+      <input type="password" id="password" placeholder="Contraseña">
 
-  <!-- Botones principales -->
-  <button onclick="login()">Iniciar sesión</button>
-  <button onclick="mostrarRegistro()">Registrarse</button>
-</section>
+      <!-- reCAPTCHA para login -->
+      <div class="g-recaptcha" data-sitekey="6LfiEHErAAAAABsbuRn9IEgOsBLG9nqzON1NcY1Z" id="recaptcha-login"></div>
 
-<!-- Modal de registro -->
-<div id="modal-registro" class="modal" style="display:none;">
-  <div class="modal-contenido">
-    <h2>Registro de nuevo usuario</h2>
+      <button onclick="login()">Iniciar sesión</button>
+      <button onclick="mostrarRegistro()">Registrarse</button>
+    </section>
 
-    <input type="text" id="nombre" placeholder="Nombre">
-    <input type="text" id="apellidos" placeholder="Apellidos">
-    <input type="email" id="email-registro" placeholder="Correo electrónico">
-    <input type="tel" id="telefono" placeholder="Teléfono">
-    <input type="password" id="password-registro" placeholder="Contraseña">
+    <!-- Modal de registro -->
+    <div id="modal-registro" class="modal" style="display:none;">
+      <div class="modal-contenido">
+        <h2>Registro de nuevo usuario</h2>
 
-    <label style="margin-top: 10px; display: block;">
-      <input type="checkbox" id="privacy-check">
-      Acepto la <a href="#" onclick="mostrarPolitica()">política de privacidad</a>
-    </label>
+        <input type="text" id="nombre" placeholder="Nombre">
+        <input type="text" id="apellidos" placeholder="Apellidos">
+        <input type="email" id="email-registro" placeholder="Correo electrónico">
+        <input type="tel" id="telefono" placeholder="Teléfono">
+        <input type="password" id="password-registro" placeholder="Contraseña">
 
-    <!-- reCAPTCHA -->
-    <div class="g-recaptcha" data-sitekey="6LfiEHErAAAAABsbuRn9IEgOsBLG9nqzON1NcY1Z"></div>
+        <label style="margin-top: 10px; display: block;">
+          <input type="checkbox" id="privacy-check">
+          Acepto la <a href="#" onclick="mostrarPolitica()">política de privacidad</a>
+        </label>
 
-    <button onclick="register()">Registrarse</button>
-    <button onclick="cerrarRegistro()">Cancelar</button>
-  </div>
-</div>
+        <!-- reCAPTCHA para registro -->
+        <div class="g-recaptcha" data-sitekey="6LfiEHErAAAAABsbuRn9IEgOsBLG9nqzON1NcY1Z" id="recaptcha-registro"></div>
 
-<!-- Modal de política de privacidad (igual que antes) -->
-<div id="modal-privacidad" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#00000088; z-index:999;">
-  <div style="background:white; padding:2em; max-width:500px; margin:10% auto; border-radius:10px;">
-    <h3>Política de Protección de Datos</h3>
-    <p>Al registrarte, tus datos serán usados únicamente para el acceso al sistema. Puedes solicitar su eliminación en cualquier momento.</p>
-    <button onclick="cerrarModal()">Cerrar</button>
-  </div>
-</div>
+        <button onclick="register()">Registrarse</button>
+        <button onclick="cerrarRegistro()">Cancelar</button>
+      </div>
+    </div>
+
+    <!-- Modal de política de privacidad -->
+    <div id="modal-privacidad" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#00000088; z-index:999;">
+      <div style="background:white; padding:2em; max-width:500px; margin:10% auto; border-radius:10px;">
+        <h3>Política de Protección de Datos</h3>
+        <p>Al registrarte, tus datos serán usados únicamente para el acceso al sistema. Puedes solicitar su eliminación en cualquier momento.</p>
+        <button onclick="cerrarModal()">Cerrar</button>
+      </div>
+    </div>
 
     <section id="chat-section" style="display:none;">
       <h2>Chat GPT</h2>
@@ -68,7 +70,7 @@
     <p>© 2025 Interfaz GPT</p>
   </footer>
 
-  <!-- Firebase y reCAPTCHA -->
+  <!-- Scripts -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
