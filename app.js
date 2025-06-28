@@ -64,17 +64,17 @@ function register() {
 
 // Inicio de sesión básico
 function login() {
-  if (!captchaValido('recaptcha-login')) return;
-
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
   auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      document.getElementById("auth-section").style.display = "none";
-      document.getElementById("chat-section").style.display = "block";
+    .then((userCredential) => {
+      // Redirige al chat
+      window.location.href = "chat.html";
     })
-    .catch((error) => alert(error.message));
+    .catch((error) => {
+      alert("Error al iniciar sesión: " + error.message);
+    });
 }
 
 // Recuperación de contraseña
