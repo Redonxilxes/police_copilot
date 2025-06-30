@@ -13,10 +13,8 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
 // Verifica si el reCAPTCHA fue completado
-function captchaValido(idDiv) {
-  const widget = document.querySelector(`#${idDiv} iframe`);
-  const name = widget?.getAttribute("name");
-  const response = grecaptcha.getResponse(name);
+function captchaValido(id) {
+  const response = grecaptcha.getResponse(id);
   if (!response) {
     alert("Por favor, verifica que no eres un robot.");
     return false;
@@ -24,23 +22,19 @@ function captchaValido(idDiv) {
   return true;
 }
 
-// Mostrar y ocultar modales
+// Abre el modal de registro
 function mostrarRegistro() {
   document.getElementById("modal-registro").style.display = "flex";
 }
+
+// Cierra el modal de registro
 function cerrarRegistro() {
   document.getElementById("modal-registro").style.display = "none";
 }
-function mostrarPolitica() {
-  document.getElementById("modal-privacidad").style.display = "block";
-}
-function cerrarModal() {
-  document.getElementById("modal-privacidad").style.display = "none";
-}
 
-// Registro
+// Registro con campos adicionales
 function register() {
-  if (!captchaValido("captcha-registro")) return;
+  if (!captchaValido('recaptcha-registro')) return;
 
   const nombre = document.getElementById("nombre").value;
   const apellidos = document.getElementById("apellidos").value;
@@ -59,7 +53,7 @@ function register() {
     return;
   }
 
-  auth.createUserWithEmailAndPassword(email, password)
+  firebase.auth().createUserWithEmailAndPassword(email, password)
     .then(() => {
       alert("¡Registro exitoso!");
       cerrarRegistro();
@@ -68,15 +62,14 @@ function register() {
     .catch((error) => alert(error.message));
 }
 
-// Login
+// Inicio de sesión básico
 function login() {
-  if (!captchaValido("captcha-login")) return;
-
-  const email = document.getElementById("email-login").value;
-  const password = document.getElementById("password-login").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
   auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
+    .then((userCredential) => {
+      // Redirige al chat
       window.location.href = "chat.html";
     })
     .catch((error) => {
@@ -86,7 +79,7 @@ function login() {
 
 // Recuperación de contraseña
 function resetPassword() {
-  const email = document.getElementById("email-login").value;
+  const email = document.getElementById("email").value;
 
   if (!email) {
     alert("Ingresa tu correo para recuperar la contraseña.");
@@ -98,28 +91,41 @@ function resetPassword() {
     .catch((error) => alert(error.message));
 }
 
-// Chat GPT (llamada a backend)
+// Chat simulado
 function sendMessage() {
   const input = document.getElementById("user-input");
   const chatBox = document.getElementById("chat-box");
   const message = input.value.trim();
   if (message === "") return;
 
+  // Mostrar el mensaje del usuario
   chatBox.innerHTML += `<div><strong>Tú:</strong> ${message}</div>`;
   input.value = "";
 
+  // Enviar al backend que llama a OpenAI
   fetch("/api/openai", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message })
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ message: message })
   })
-  .then((res) => res.json())
-  .then((data) => {
-    chatBox.innerHTML += `<div><strong>GPT:</strong> ${data.respuesta}</div>`;
+  .then(response => response.json())
+  .then(data => {
+    chatBox.innerHTML += `<div><strong>GPT:</strong> ${data.reply}</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
   })
-  .catch((err) => {
-    console.error(err);
-    chatBox.innerHTML += `<div><strong>GPT:</strong> Error al obtener respuesta.</div>`;
+  .catch(error => {
+    console.error("Error al obtener respuesta de GPT:", error);
+    chatBox.innerHTML += `<div><strong>GPT:</strong> Hubo un error al responder.</div>`;
   });
+}
+
+// Modal de política de privacidad
+function mostrarPolitica() {
+  document.getElementById("modal-privacidad").style.display = "block";
+}
+
+function cerrarModal() {
+  document.getElementById("modal-privacidad").style.display = "none";
 }
