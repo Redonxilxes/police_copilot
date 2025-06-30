@@ -98,34 +98,32 @@ function sendMessage() {
   const message = input.value.trim();
   if (message === "") return;
 
-  // Mostrar el mensaje del usuario
-  chatBox.innerHTML += `<div><strong>Tú:</strong> ${message}</div>`;
+  chatBox.innerHTML += `<div class="mensaje usuario"><strong>Tú:</strong> ${message}</div>`;
   input.value = "";
 
-  // Enviar al backend que llama a OpenAI
-  fetch("/api/openai", {
+  fetch("https://police-copilot.vercel.app/api/openai", { // Reemplaza con tu URL de Vercel
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ message: message })
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
   .then(data => {
-    chatBox.innerHTML += `<div><strong>GPT:</strong> ${data.reply}</div>`;
+    if (data.error) {
+      throw new Error(data.detalle || data.error);
+    }
+    chatBox.innerHTML += `<div class="mensaje gpt"><strong>GPT:</strong> ${data.reply}</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
   })
   .catch(error => {
     console.error("Error al obtener respuesta de GPT:", error);
-    chatBox.innerHTML += `<div><strong>GPT:</strong> Hubo un error al responder.</div>`;
+    chatBox.innerHTML += `<div class="mensaje gpt"><strong>GPT:</strong> Hubo un error al responder: ${error.message}</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
   });
-}
-
-// Modal de política de privacidad
-function mostrarPolitica() {
-  document.getElementById("modal-privacidad").style.display = "block";
-}
-
-function cerrarModal() {
-  document.getElementById("modal-privacidad").style.display = "none";
 }
