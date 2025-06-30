@@ -37,6 +37,14 @@ export default async function handler(req, res) {
     res.status(200).json({ respuesta: data.choices[0].message.content });
 
   } catch (error) {
+    console.error("Error OpenAI:", error);
+    try {
+      const errorBody = await response.text();
+      console.error("Respuesta completa:", errorBody);
+      return res.status(500).json({ error: "Error en el servidor", detalle: errorBody });
+    } catch (e) {
+      return res.status(500).json({ error: "Error desconocido en el servidor", detalle: e.message });
+    }
     console.error("Error al llamar a OpenAI:", error);
     res.status(500).json({ error: "Error en el servidor al comunicarse con OpenAI" });
   }
