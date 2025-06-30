@@ -83,4 +83,24 @@ footer {
 .modal-contenido input, .modal-contenido button {
   margin-bottom: 1em;
 }
+/* Estilo de los mensajes del chat */
+.mensaje {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.usuario {
+  background-color: #e0f0ff;
+  text-align: right;
+  margin-left: auto;
+}
+
+.gpt {
+  background-color: #f2f2f2;
+  text-align: left;
+  margin-right: auto;
+}
 

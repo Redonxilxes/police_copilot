@@ -15,11 +15,11 @@
   <main>
     <section id="auth-section">
       <h2>Iniciar sesión</h2>
-      <input type="email" id="email" placeholder="Correo electrónico">
-      <input type="password" id="password" placeholder="Contraseña">
+      <input type="email" id="email-login" placeholder="Correo electrónico">
+      <input type="password" id="password-login" placeholder="Contraseña">
 
       <!-- reCAPTCHA para login -->
-      <div class="g-recaptcha" data-sitekey="6LfiEHErAAAAABsbuRn9IEgOsBLG9nqzON1NcY1Z" id="recaptcha-login"></div>
+      <div id="captcha-login" class="g-recaptcha" data-sitekey="6LfiEHErAAAAABsbuRn9IEgOsBLG9nqzON1NcY1Z"></div>
 
       <button onclick="login()">Iniciar sesión</button>
       <button onclick="mostrarRegistro()">Registrarse</button>
@@ -42,7 +42,7 @@
         </label>
 
         <!-- reCAPTCHA para registro -->
-        <div class="g-recaptcha" data-sitekey="6LfiEHErAAAAABsbuRn9IEgOsBLG9nqzON1NcY1Z" id="recaptcha-registro"></div>
+        <div id="captcha-registro" class="g-recaptcha" data-sitekey="6LfiEHErAAAAABsbuRn9IEgOsBLG9nqzON1NcY1Z"></div>
 
         <button onclick="register()">Registrarse</button>
         <button onclick="cerrarRegistro()">Cancelar</button>
@@ -70,7 +70,7 @@
     <p>© 2025 Interfaz GPT</p>
   </footer>
 
-  <!-- Scripts -->
+  <!-- Firebase y reCAPTCHA -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
