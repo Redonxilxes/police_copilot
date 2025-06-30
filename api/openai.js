@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = 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;
   console.log("API Key exists:", !!apiKey);
   if (!apiKey) {
     console.error("❌ API key no definida en las variables de entorno");
