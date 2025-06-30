@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   const apiKey = process.env.OPENAI_API_KEY;
-
+  console.log("API Key exists:", !!apiKey); // Log para verificar si la clave está definida
   if (!apiKey) {
     console.error("❌ API key no definida en las variables de entorno");
     return res.status(500).json({ error: "API key no definida" });
