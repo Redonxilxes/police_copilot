@@ -61,7 +61,7 @@
         });
 
         const data = await res.json();
-        chatBox.innerHTML += `<div class="mensaje gpt"><strong>GPT:</strong> ${data.respuesta}</div>`;
+        chatBox.innerHTML += `<div class="mensaje gpt"><strong>GPT:</strong> ${data.reply}</div>`;
         chatBox.scrollTop = chatBox.scrollHeight;
       } catch (error) {
         chatBox.innerHTML += `<div class="mensaje gpt"><strong>Error:</strong> No se pudo obtener respuesta.</div>`;
