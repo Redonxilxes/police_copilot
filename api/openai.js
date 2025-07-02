@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const apiKey = 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;
+  const apiKey = "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";
   console.log("API Key exists:", !!apiKey);
   if (!apiKey) {
     console.error("❌ API key no definida en las variables de entorno");
